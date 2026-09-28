@@ -1,19 +1,17 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, BadgeCheck, CheckCheck, ChevronRight, Heart, Keyboard, MapPin, Mic, MicOff, Send, ShieldCheck, Soup, Sparkles, Volume2, VolumeX, Footprints } from "lucide-react";
+import { BadgeCheck, CheckCheck, ChevronRight, Keyboard, MapPin, Mic, MicOff, Send, ShieldCheck, Soup, Volume2, VolumeX, Footprints } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DealIntegrity } from "@/components/DealIntegrity";
 import { DealStickerGrid } from "@/components/DealStickerGrid";
 import type { DealCategoryId } from "@/lib/deal-categories";
-import hawkerImage from "@/assets/hawker-chicken-rice.jpg";
 import otterLogo from "@/assets/otter-logo.png";
-import gwenSticker from "@/assets/sticker-gwen.png";
 import { ActionSticker, GroupSticker, type StickerKind } from "@/components/ActionSticker";
 import { copy, languages, type MealDiet, type ResidentLanguage } from "@/lib/resident-language";
 import { findNeighbourhood, type StallDiet } from "@/lib/neighbourhoods";
 import { locatePostal, nearestCentres } from "@/lib/hawker-centres";
 import { useLiveDeals } from "@/lib/use-live-deals";
-import { BookOpen, Presentation, MessageCircle, Info, Users, Share2 } from "lucide-react";
+import { MessageCircle, Info, Users, Share2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
@@ -293,53 +291,15 @@ function LobangKaki() {
          <div className="border-b border-border px-2 py-4"><DealStickerGrid value={dealCat} onChange={setDealCat} /><p className="mt-3 rounded-2xl bg-food/40 px-4 py-2.5 text-center text-xs font-bold text-food-foreground">Each lobang is only shown to neighbours within walking distance of that hawker centre — no island-wide wild goose chases.</p></div>{feed.length === 0 ? null : <div className="space-y-3 pt-4">{feed.map(item => <article key={item.id} className="rounded-md border border-border bg-card p-4 shadow-sm sm:p-5"><div className="flex flex-wrap items-center justify-between gap-2"><span className={`inline-flex items-center gap-1.5 rounded-sm px-2.5 py-1 text-xs font-extrabold ${item.category === "Food Rescue" ? "bg-warning text-warning-foreground" : "bg-secondary text-primary"}`}>{item.category === "Food Rescue" ? <Soup className="size-3.5" /> : <Footprints className="size-3.5" />}{item.category}</span><span className="text-xs font-semibold text-muted-foreground">{item.time}</span></div>{stickerFor(item.category) && <ActionSticker kind={stickerFor(item.category) as StickerKind} compact callout={item.category === "Food Rescue" ? "Stall check first!" : undefined} />}<h4 className="mt-3 text-lg font-bold">{item.title}</h4><p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.detail}</p><div className="mt-3 flex flex-wrap gap-3 text-xs font-semibold text-muted-foreground"><span className="flex items-center gap-1"><MapPin className="size-3.5" />{item.location}</span><span className="flex items-center gap-1"><span className="size-1.5 rounded-full bg-primary" />{item.urgency}</span></div><div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4"><span className="flex items-center gap-1 text-xs font-bold text-muted-foreground"><BadgeCheck className="size-4" /> {item.category === "Food Rescue" ? "Needs 1 volunteer verification" : "Community request · demo only"}</span>{item.category !== "Food Rescue" && <Button variant={item.assisted ? "secondary" : "default"} onClick={() => assist(item.id)} className="h-11 text-sm">{item.assisted ? "Assistance marked" : "Claim & Assist Neighbour"}{!item.assisted && <ChevronRight />}</Button>}</div></article>)}</div>}
     <DealIntegrity cat={dealCat} />
   </section>;
-  const about = <div className="space-y-3 text-sm text-muted-foreground"><div className="flex flex-wrap gap-2">{["MIT License", "$0 stack", "SAIA Festival 2026", "No sign-in"].map(b => <span key={b} className="rounded-full bg-secondary px-3 py-1 text-xs font-bold text-primary">{b}</span>)}</div><p>Browser voice availability varies by device; Hokkien uses a Mandarin fallback.</p><p className="font-medium text-foreground">Made with <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline">Lovable</a> for <a href="https://www.aicollective.com/h4h" target="_blank" rel="noopener noreferrer" className="underline">Hack for Humanity</a></p></div>;
+  const about = <div className="space-y-3 text-sm text-muted-foreground"><div className="flex flex-wrap gap-2">{["MIT License", "$0 stack", "Open source", "No sign-in"].map(b => <span key={b} className="rounded-full bg-secondary px-3 py-1 text-xs font-bold text-primary">{b}</span>)}</div><p>Browser voice availability varies by device; Hokkien uses a Mandarin fallback.</p><p>LobangKaki is an open-source community project. Contributions are welcome on <a href="https://github.com/evecount/lobangkaki" target="_blank" rel="noopener noreferrer" className="underline">GitHub</a>.</p><p className="font-medium text-foreground">Made with <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline">Lovable</a></p></div>;
   const privacyTerms = <section aria-labelledby="privacy-terms" className="rounded-md border border-primary/20 bg-card p-3">
     <div className="flex items-center gap-2"><ShieldCheck className="size-5 shrink-0 text-primary" /><h2 id="privacy-terms" className="font-display text-sm font-extrabold">Zero-PII resident promise</h2></div>
     <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">No account, name, phone number, NRIC or personal profile is requested. Messages and actions are an in-browser festival demo and are not tied to an identity. Camera and location permission are requested only when someone chooses to share and ground a meal tip.</p>
   </section>;
-  const judges = <section aria-labelledby="judge-thanks" className="short-screen-judges">
-    <div className="flex items-center gap-2"><Heart className="size-4 fill-primary text-primary" /><h2 id="judge-thanks" className="font-display text-sm font-extrabold">Thank you, Hack for Humanity Judges</h2></div>
-    <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs leading-tight">
-      {[
-        ["Aileen Lim", "Senior Assistant Director in Health Systems Intelligence"],
-        ["Han Cheng Liang", "Founder of Capital H"],
-        ["Cheryl Ong", "Medtech Leader and Social Impact Advocate"],
-        ["Jovan Hartono", "Robotics Startup Founder & AI Researcher"],
-      ].map(([name, role]) => <div key={name}><strong className="block text-foreground">{name}</strong><span className="text-muted-foreground">{role}</span></div>)}
-    </div>
-  </section>;
-  const creator = <section aria-labelledby="creator-title" className="flex items-center gap-3 rounded-md bg-food/45 p-3">
-    <img src={gwenSticker} alt="Illustrated sticker of Gwen wearing a baseball cap, round glasses and cream blazer" width={112} height={112} className="size-24 shrink-0 object-contain drop-shadow-sm" />
-    <div className="min-w-0"><div className="flex items-center gap-1.5 text-primary"><Sparkles className="size-4" /><p className="text-[11px] font-extrabold uppercase">Meet the maker</p></div><h2 id="creator-title" className="font-display text-base font-extrabold">Gwendalynn Lim Wan Ting</h2><p className="mt-1 text-xs leading-relaxed text-muted-foreground">Honours student of Applied Computing at Singapore Institute of Technology (SIT), researching quantum information systems that remove the need to sign in—total privacy with useful needs prediction.</p></div>
-  </section>;
-  const links = <div className="project-links flex flex-wrap gap-3"><Button asChild className="h-12 rounded-full px-6 text-base"><Link to="/pitch" search={{ slide: 1 }}><Presentation />View pitch deck</Link></Button><Button asChild variant="outline" className="h-12 rounded-full px-6 text-base"><Link to="/readme"><BookOpen />Read the README</Link></Button></div>;
   const navItems = [{ id: "chat" as const, label: "Chat", icon: MessageCircle }, { id: "deals" as const, label: "Live deals", icon: Users }, { id: "about" as const, label: "About", icon: Info }];
 
   return <main className="flex h-dvh overflow-hidden bg-background text-foreground md:bg-secondary">
-    <div className="mx-auto flex h-full w-full max-w-[1440px] items-start gap-4 p-0 md:p-2 lg:gap-8 lg:px-6 xl:px-8">
-    <aside className="hidden h-full min-w-0 flex-1 overflow-hidden md:flex md:items-start" aria-label="Judge overview of LobangKaki">
-      <div className="ml-auto w-full max-w-3xl px-3 py-1 lg:px-6 [@media(max-height:650px)]:py-0">
-        <div className="flex items-center justify-between gap-8">
-          <div className="min-w-0">
-             <p className="mb-1 text-[11px] font-extrabold uppercase text-primary">Judge view · live festival prototype</p>
-              <h1 className="font-display text-3xl font-extrabold leading-none lg:text-4xl xl:text-5xl [@media(max-height:650px)]:text-3xl">LobangKaki</h1>
-            <p className="mt-1 text-base font-bold text-primary lg:text-lg">甘榜通 · Hack for Humanity 2026</p>
-            <p className="mt-1 text-sm text-muted-foreground">Free · No download · No sign-in</p>
-          </div>
-            <img src={otterLogo} alt="" width={176} height={176} className="size-20 shrink-0 rounded-2xl bg-card object-contain p-2 shadow-xl lg:size-24 xl:size-28 [@media(max-height:650px)]:size-16" />
-        </div>
-         <div className="mt-3 flex flex-wrap gap-2 [@media(max-height:650px)]:mt-1">{["MIT License", "$0 Stack", "SAIA AI Festival 2026 · Hack for Humanity"].map(b => <span key={b} className="rounded-full border border-primary/30 bg-card px-3 py-1 text-[11px] font-extrabold text-primary">{b}</span>)}</div>
-         <ul className="mt-2 grid grid-cols-1 gap-0.5 text-[11px] lg:grid-cols-2" aria-label="Hack for Humanity pillars">{[["👵", "Silver Connections", "Voice + local groups"], ["🤝", "Neighbourhoods That Care", "Chop, claim, escort"], ["💙", "Kinder Digital World", "Calm, plain-language help"], ["🙏", "Dignity by Design", "No login or identifiers"], ["🌏", "No One Left Behind", "Four resident languages"]].map(([i, p, d]) => <li key={p}><strong>{i} {p}</strong> <span className="text-muted-foreground">— {d}</span></li>)}</ul>
-         <div className="mt-3 flex divide-x divide-border text-center [@media(max-height:650px)]:mt-1">{[["4", "languages"], ["123", "real hawker centres"], ["100 m", "photo geofence"], ["0", "sign-ins"]].map(([n, l]) => <div key={l} className="px-3 first:pl-0 lg:px-5"><strong className="block text-base lg:text-lg [@media(max-height:650px)]:text-base">{n}</strong><span className="text-[10px] text-muted-foreground lg:text-xs [@media(max-height:650px)]:text-[10px]">{l}</span></div>)}</div>
-         <p className="judge-summary mt-2 max-w-2xl text-xs leading-relaxed lg:text-sm">A voice-first community helper for meal lobang, CC events and activity kakis. A meal tip needs a live photo, a 100 m location check and a neighbour's chop before it can be heard as verified.</p>
-         <div className="short-screen-panels mt-2 grid grid-cols-2 gap-2 [@media(max-height:650px)]:[&>section]:p-2 [@media(max-height:650px)]:[&_section_img]:size-16">{privacyTerms}{creator}</div>
-         <div className="mt-2 border-t border-border pt-2">{judges}</div>
-         <div className="judge-links mt-2 flex items-center justify-between gap-4"><div className="shrink-0 scale-90 origin-left">{links}</div><p className="hidden items-center gap-2 text-right text-xs font-extrabold text-primary xl:flex"><span>Try the mobile experience</span><ArrowRight className="size-5" /></p></div>
-         <div className="judge-credit text-[11px] text-muted-foreground"><p className="font-medium text-foreground">Made with <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline">Lovable</a> for <a href="https://www.aicollective.com/h4h" target="_blank" rel="noopener noreferrer" className="underline">Hack for Humanity</a></p></div>
-      </div>
-    </aside>
-
+    <div className="mx-auto flex h-full w-full items-center justify-center p-0 md:p-4">
     <div className="relative flex h-dvh w-full flex-col bg-background md:h-full md:max-h-[900px] md:w-auto md:aspect-[9/19.5] md:min-w-[250px] md:shrink-0 md:overflow-hidden md:rounded-[2.75rem] md:border-8 md:border-foreground md:shadow-2xl lg:min-w-[280px] xl:min-w-[300px]" aria-label="Interactive LobangKaki mobile experience inside a phone frame">
       <div className="pointer-events-none absolute left-1/2 top-2 z-10 hidden h-5 w-28 -translate-x-1/2 rounded-full bg-foreground md:block" aria-hidden="true" />
       <div className="shrink-0 md:pt-7">{header}</div>
@@ -362,11 +322,8 @@ function LobangKaki() {
          <div className="mt-4"><div className="mb-2 text-base font-bold text-foreground" id="language-label">Language / 语言 / Bahasa / மொழி</div><div className="grid grid-cols-2 gap-2 sm:grid-cols-4" role="group" aria-labelledby="language-label">{languages.map(option => <Button key={option.id} type="button" variant={language === option.id ? "default" : "outline"} aria-pressed={language === option.id} onClick={() => chooseLanguage(option.id)} className="h-auto min-h-12 whitespace-normal px-2 py-2 text-center text-base leading-tight">{option.label}</Button>)}</div></div>
          <div className="mt-4"><div className="mb-2 text-base font-bold text-foreground" id="diet-label">{t.diet}</div><div className="flex flex-wrap gap-2" role="group" aria-labelledby="diet-label">{(["all", "halal", "vegetarian"] as const).map(option => <Button key={option} type="button" variant={mealDiet === option ? "default" : "outline"} aria-pressed={mealDiet === option} onClick={() => { setMealDiet(option); window.speechSynthesis?.cancel(); }} className="min-h-12 whitespace-normal px-3 text-base">{option === "all" ? t.all : option === "halal" ? t.halal : t.vegetarian}</Button>)}</div><p className="mt-2 text-sm text-muted-foreground" role="status">{suitableMeals.length ? `${suitableMeals.length} ${language === "zh" ? "份已检查的餐食" : language === "ms" ? "hidangan telah disemak" : language === "ta" ? "சரிபார்த்த உணவு" : "checked meal(s) in this demo"}. ${language === "en" ? "Confirm ingredients with the stall." : ""}` : t.empty}</p></div>
          <Button type="button" variant="outline" onClick={() => { setVoiceOn(!voiceOn); if (voiceOn) window.speechSynthesis?.cancel(); }} className="min-h-12 w-full text-base">{voiceOn ? <><Volume2 />Spoken replies on</> : <><VolumeX />Spoken replies off</>}</Button>
-        <div className="md:hidden">{links}</div>
-        <div className="md:hidden">{walkStats}</div>
-         <div className="md:hidden">{privacyTerms}</div>
-         <div className="md:hidden">{creator}</div>
-         <div className="md:hidden">{judges}</div>
+         {walkStats}
+         {privacyTerms}
         {about}
       </div>
       <nav className="relative grid shrink-0 grid-cols-5 items-end border-t border-border bg-background pb-[env(safe-area-inset-bottom)]" aria-label="App sections">

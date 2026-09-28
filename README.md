@@ -1,105 +1,86 @@
-# LobangKaki (甘榜通) • Dignity by Design
+# LobangKaki (甘榜通)
 
-> **Headless Social Infrastructure for the Next Billion Users of AI.**  
-> Built for the **SAIA A.I. Festival 2026: Hack for Humanity (H4H)**.  
-> **License:** MIT (Open by Default) | **Budget:** $0 (Free Web APIs + Lovable AI Edge)
+> A voice-first, no-sign-in community assistant for Singapore neighbourhoods — meal lobang, community club events, and activity groups, in four languages.
 
-Made with [Lovable](https://lovable.dev) for [Hack for Humanity](https://www.aicollective.com/h4h).
+**License:** MIT · **Cost to run:** $0 (browser-native APIs) · **Stack:** React 19 + TanStack Start + Tailwind CSS v4
 
----
-
-## 🌟 The Vision: Social Infrastructure, Not Another App
-
-The next billion users of AI will not prompt LLMs through text boxes or navigate complex English SaaS portals. In Singapore, vulnerable seniors and low-literacy residents already experience digital exclusion when trying to claim municipal subsidies, read official letters, or access affordable daily meals.
-
-**LobangKaki** is headless social infrastructure that operates through familiar channels—such as WhatsApp voice notes and audio dialogues. It translates fragmented dialect voice notes into verified community action with **zero user logins, zero personal identifiers, and zero API costs**.
+**Live demo:** https://lobangkaki.lovable.app · **Source:** https://github.com/evecount/lobangkaki
 
 ---
 
-## 🎯 Alignment with Hackathon Themes
+## What it is
 
-| Challenge Pillar | Problem Solved | In-App Feature & Implementation |
+LobangKaki ("lobang" = Singlish for a good deal or opportunity, "kaki" = buddy) is a WhatsApp-style assistant built for residents who are excluded by app stores, logins, and English-only portals — especially seniors.
+
+- **No account, no download, no personal identifiers.** Open the page and talk.
+- **Voice-first.** Speak in English/Singlish, Mandarin (Hokkien label falls back to Mandarin speech), Malay, or Tamil; replies are read aloud.
+- **Hyperlocal.** Meal deals and activities are grounded to real NEA hawker centres and shown only within walking distance.
+
+The current build is a **client-side simulation**: nothing persists and no message reaches a real volunteer. See [Roadmap](#roadmap).
+
+## Safety model: no phantom deals
+
+The core design problem is trust without logins. A prank "free food" tip can send an elderly resident on a wasted, demoralising trip. LobangKaki's answer:
+
+1. **Physical grounding** — a deal requires a live stall photo plus a location check within ~100 m of the stall before it can enter the verification queue.
+2. **Community chop** — listings start as `🟡 Pending`; only a volunteer-checked listing is ever spoken as verified. Chat tips are never voiced as real offers.
+3. **Anomaly tally** — listings flagged twice are withdrawn automatically.
+4. **Zero PII for seniors** — no name, phone number, NRIC, or profile is ever requested. Camera/location permissions are asked only when someone chooses to ground a deal.
+
+Dietary filters (halal, vegetarian) use only explicit poster declarations — never text guesses — and always tell residents to confirm ingredients with the stall.
+
+## Features
+
+- **Chat simulator** with voice input (Web Speech API) and spoken replies (`speechSynthesis`)
+- **Live Deals board** — 12 food categories with volunteer-verification flow, deal expiry, and withdrawal
+- **Neighbourhood lookup** — 24 Singapore estates plus 6-digit postal codes, grounded to 123 real hawker centres from Data.gov.sg
+- **"Find food near me"** — one-tap geolocation to the four nearest official hawker centres
+- **CC events & activity groups** — walking, dancerobics, wushu, karaoke, health screenings
+- **Share a lobang** — Web Share API with WhatsApp fallback
+- **Accessible by default** — large type, high contrast, reduced-motion support, screen-reader labels
+
+## Tech stack
+
+| Layer | Choice | Why |
 | :--- | :--- | :--- |
-| **💚 Silver Connections** | Seniors isolated from daily support and activities. | **Zero-Text Dialect Voice Ingress:** Seniors speak naturally in Singlish/Hokkien/Malay/Mandarin; browser native Web Speech API converts dialect to intent. |
-| **💛 Neighbourhoods That Care** | Food surplus wasted while seniors struggle with food costs. | **Hyperlocal Mutual Aid Mesh:** Hawkers broadcast surplus meals ($2 or free); nearby volunteers verify and escort delivery. |
-| **💙 Kinder Digital World** | Confusing official letters and cold, jargon-heavy portals. | **Kind Language Engine:** Calm, plain-spoken audio readbacks translate bureaucratic notices into reassuring, everyday words. |
-| **✨ Dignity by Design** | Portals requiring complex logins, passwords, and Singpass. | **100% Identifier-Free Dignity:** Zero login, zero phone tracking, and respectful audio readbacks that never treat seniors like tickets. |
-| **🌏 No One Left Behind** | Tech requiring expensive phones, subscriptions, or credit cards. | **$0 Stack, Open Web Native:** Runs purely on in-browser speech synthesis, lightweight React client state, and MIT-licensed open infrastructure. |
+| Framework | React 19 + TanStack Start (Vite 7) | SSR-capable, file-based routing |
+| Styling | Tailwind CSS v4 + shadcn/ui | Token-based theming |
+| Speech | Browser Web Speech API | $0, zero latency, no keys |
+| Data | Bundled Data.gov.sg hawker centre dataset | Works offline, no backend needed |
+| Hosting | Lovable | Free tier |
 
----
-
-## 🛡️ Anti-Prank & Phantom Deal Guardrails (Dignity Without Logins)
-
-A major risk in community-driven aid is **malicious pranks**—sending an elderly resident to a hawker stall only to find no food exists. To solve this without imposing tracking or logins on seniors:
-
-1. **Physical Grounding:** Deals require an in-situ snapshot of the stall with local geohash validation before entering the broadcast queue.
-2. **Community Double-Chop (Verification):** All new listings enter as `🟡 Pending Stall Check`. Only after a nearby grassroots volunteer or neighboring stallholder taps `🟢 LobangKaki Verified` is the listing read out to seniors.
-3. **Transient Anomaly Tally:** Devices repeatedly posting phantom deals or flagged twice by community members are automatically dropped from the broadcast pool and increment an integrity tally.
-4. **Verified Audio Receipts:** When reading a deal to an elderly resident, the AI voice explicitly confirms: *"Auntie, this stall at Blk 208 was verified 10 minutes ago by volunteer Sarah. Safe to collect."*
-
----
-
-## 🚀 Key Features
-
-* **Dual-View Architecture:**
-  * **Resident WhatsApp Simulator:** High-contrast, authentic messaging UI with live audio waveform recording and warm `speechSynthesis` audio playback.
-  * **Community Dispatch Terminal:** Real-time visibility into structured JSON webhook payloads, urgent requests, and volunteer task claiming.
-* **Instant Demo Mode:** 3 one-click scenarios for noisy demo halls:
-  1. *Hawker Surplus:* Maxwell Chicken Rice surplus packs for CHAS Blue cardholders.
-  2. *CC & Kampung Events:* Active ageing programmes and health screenings at the community club.
-  3. *Silver Companion:* Connecting to a walking group at Ang Mo Kio CC.
-
----
-
-## 🛠️ Architecture & Tech Stack
-
-```
-[Resident Voice Note / Presets] 
-               │
-               ▼
-[Browser Native SpeechRecognition] 
-               │
-               ▼
-[Lovable AI Edge Gateway (Intent & De-escalation Parser)]
-               │
-      ┌────────┴────────┐
-      ▼                 ▼
-[Warm Audio SpeechSynthesis]   [Headless Community Webhook]
-(Resident Readback)            (Grassroots Dispatch Board)
-```
-
-* **Platform:** Built and deployed with [Lovable.dev](https://lovable.dev)
-* **Speech-to-Text:** Native Web Speech API (`SpeechRecognition` / `webkitSpeechRecognition`)
-* **Text-to-Speech:** Native In-Browser `window.speechSynthesis` (Zero latency, $0 cost)
-* **License:** MIT Open Source License
-
----
-
-## 🏃 Quick Start (Local Run)
+## Quick start
 
 ```bash
-# Clone the repository
-# Repository URL to be supplied by project owner
-# Clone your LobangKaki repository here
-
-# Install dependencies
+git clone https://github.com/evecount/lobangkaki.git
+cd lobangkaki
 npm install
-
-# Start the local development server
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser. Ensure your microphone permissions are granted.
+Open http://localhost:5173 and grant microphone permission if you want voice input.
 
----
+## Project structure
 
-## ⚖️ Hackathon Compliance
-- **Rule 1 (Teams of 1-4):** Solo/Team Sprint for SAIA AI Festival.
-- **Rule 2 (Start from Zero):** Conceived and built from 2:30 PM to 5:30 PM.
-- **Rule 3 (Open by Default):** Fully open-source under MIT license.
-- **Rule 4 (Spend $0):** Leveraged 100% free web standards and Lovable AI tier.
----
+```
+src/
+  routes/           # TanStack file routes (/, /readme)
+  components/       # UI, deal integrity, sticker grid
+  lib/              # neighbourhoods, hawker centres, resident language copy, live deals
+  assets/           # illustrated stickers and mascot
+```
 
-## Resident language and meal preferences
+## Roadmap
 
-The resident view offers one-tap English/Singlish, Mandarin (Hokkien-label fallback), Malay, and Tamil choices. Browser speech recognition and spoken replies request the closest supported locale; actual language/voice availability varies by browser and device. The greeting and core safety replies follow the selected language. The halal and vegetarian/vegan meal filters only show matching poster-declared, volunteer-checked deals. Dietary declarations and demo volunteer taps are not independently certified; confirm ingredients and availability directly with the stall. No name or identifier is requested.
+- [ ] Real backend for deal persistence and volunteer dispatch
+- [ ] WhatsApp/Telegram bot ingress for residents without smartphones
+- [ ] Dialect speech models beyond browser capabilities
+- [ ] Partnership pilot with a Community Club
+
+## Contributing
+
+Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). Please be kind; this project is for seniors and neighbours, and the tone of the code review should match.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
