@@ -89,6 +89,8 @@ src/
 
 Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). Please be kind; this project is for seniors and neighbours, and the tone of the code review should match.
 
+Working with an AI coding assistant? Point it at [AGENTS.md](AGENTS.md) first — it holds the project's safety rules, architecture notes, and working agreements so any agent can onboard in minutes.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
