@@ -13,8 +13,8 @@
 
 LobangKaki (甘榜通) is a voice-first, no-sign-in community assistant for
 Singapore seniors excluded by app stores, logins, and English-only portals.
-Standalone open-source (MIT); hackathon branding, judge panel, and pitch deck
-were removed — do not re-add them.
+Open-source (MIT). Hack for Humanity judge panel, /pitch deck and Best UX
+mention are restored on desktop by owner request — keep them.
 
 ## Safety model — load-bearing, never break
 
@@ -44,8 +44,8 @@ Speech API ($0, no keys — degrade gracefully). `src/routes/` (/, /readme),
 - Resident language lives in a shared locale-copy module; extend it there.
   Hokkien label falls back to Mandarin speech.
 - In-app README imports the project README — keep both in sync.
-- Desktop: centered viewport-height phone frame + small maker card; no side
-  panel; no clipping at short viewports.
+- Desktop: judge panel beside viewport-height phone frame; no clipping at
+  short viewports.
 - Quick actions stay immediately before the chat transcript; project info
   after the experience.
 

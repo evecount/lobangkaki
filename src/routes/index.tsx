@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { BadgeCheck, CheckCheck, ChevronRight, Keyboard, MapPin, Mic, MicOff, Send, ShieldCheck, Soup, Volume2, VolumeX, Footprints } from "lucide-react";
+import { BadgeCheck, CheckCheck, ChevronRight, Download, Keyboard, MapPin, Mic, MicOff, Send, ShieldCheck, Soup, Volume2, VolumeX, Footprints } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DealIntegrity } from "@/components/DealIntegrity";
 import { DealStickerGrid } from "@/components/DealStickerGrid";
@@ -11,7 +11,9 @@ import { copy, languages, type MealDiet, type ResidentLanguage } from "@/lib/res
 import { findNeighbourhood, type StallDiet } from "@/lib/neighbourhoods";
 import { locatePostal, nearestCentres } from "@/lib/hawker-centres";
 import { useLiveDeals } from "@/lib/use-live-deals";
-import { MessageCircle, Info, Users, Share2 } from "lucide-react";
+import { MessageCircle, Info, Users, Share2, ArrowRight, BookOpen, Heart, Presentation, Sparkles } from "lucide-react";
+import gwenSticker from "@/assets/sticker-gwen.png";
+import stickerPack from "@/assets/lobangkaki-stickers.zip.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
@@ -296,12 +298,56 @@ function LobangKaki() {
     <div className="flex items-center gap-2"><ShieldCheck className="size-5 shrink-0 text-primary" /><h2 id="privacy-terms" className="font-display text-sm font-extrabold">Zero-PII resident promise</h2></div>
     <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">No account, name, phone number, NRIC or personal profile is requested. Messages and actions are an in-browser festival demo and are not tied to an identity. Camera and location permission are requested only when someone chooses to share and ground a meal tip.</p>
   </section>;
+  const judges = <section aria-labelledby="judge-thanks" className="short-screen-judges">
+    <div className="flex items-center gap-2"><Heart className="size-4 fill-primary text-primary" /><h2 id="judge-thanks" className="font-display text-sm font-extrabold">Thank you, Hack for Humanity Judges</h2></div>
+    <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs leading-tight">
+      {[
+        ["Aileen Lim", "Senior Assistant Director in Health Systems Intelligence"],
+        ["Han Cheng Liang", "Founder of Capital H"],
+        ["Cheryl Ong", "Medtech Leader and Social Impact Advocate"],
+        ["Jovan Hartono", "Robotics Startup Founder & AI Researcher"],
+      ].map(([name, role]) => <div key={name}><strong className="block text-foreground">{name}</strong><span className="text-muted-foreground">{role}</span></div>)}
+    </div>
+    <p className="mt-2 text-xs leading-tight text-muted-foreground"><strong className="text-foreground">And thank you to the organisers</strong> — <span className="text-primary font-semibold">Benjamin Pitot</span> and the <span className="text-primary font-semibold">The AI Collective Singapore</span> × <span className="text-primary font-semibold">SAIA</span> × <span className="text-primary font-semibold">Lovable</span> team who made Hack for Humanity happen.</p>
+  </section>;
+  const creator = <section aria-labelledby="creator-title" className="flex items-center gap-3 rounded-md bg-food/45 p-3">
+    <img src={gwenSticker} alt="Illustrated sticker of Gwen wearing a baseball cap, round glasses and cream blazer" width={112} height={112} className="size-24 shrink-0 object-contain drop-shadow-sm" />
+    <div className="min-w-0"><div className="flex items-center gap-1.5 text-primary"><Sparkles className="size-4" /><p className="text-[11px] font-extrabold uppercase">Meet the maker</p></div><h2 id="creator-title" className="font-display text-base font-extrabold">Gwendalynn<br />Lim Wan Ting</h2><p className="mt-1 text-xs leading-relaxed text-muted-foreground">Honours student of Applied Computing at Singapore Institute of Technology (SIT), researching quantum information systems that remove the need to sign in—total privacy with useful needs prediction.</p></div>
+  </section>;
+  const links = <div className="project-links flex flex-wrap gap-3"><Button asChild className="h-12 rounded-full px-6 text-base"><Link to="/pitch" search={{ slide: 1 }}><Presentation />View pitch deck</Link></Button><Button asChild variant="outline" className="h-12 rounded-full px-6 text-base"><Link to="/readme"><BookOpen />Read the README</Link></Button></div>;
   const navItems = [{ id: "chat" as const, label: "Chat", icon: MessageCircle }, { id: "deals" as const, label: "Live deals", icon: Users }, { id: "about" as const, label: "About", icon: Info }];
 
   return <main className="flex h-dvh overflow-hidden bg-background text-foreground md:bg-secondary">
-    <div className="mx-auto flex h-full w-full items-center justify-center p-0 md:p-4">
+    <div className="mx-auto flex h-full w-full max-w-[1440px] items-start gap-4 p-0 md:p-2 lg:gap-8 lg:px-6 xl:px-8">
+    <aside className="hidden h-full min-w-0 flex-1 overflow-hidden md:flex md:items-start" aria-label="Judge overview of LobangKaki">
+      <div className="ml-auto w-full max-w-3xl px-3 py-1 lg:px-6 [@media(max-height:650px)]:py-0">
+        <div className="flex items-center justify-between gap-8">
+          <div className="min-w-0">
+             <p className="mb-1 text-[11px] font-extrabold uppercase text-primary">Judge view · live festival prototype</p>
+              <h1 className="font-display text-3xl font-extrabold leading-none lg:text-4xl xl:text-5xl [@media(max-height:650px)]:text-3xl">LobangKaki</h1>
+            <p className="mt-1 text-base font-bold text-primary lg:text-lg">甘榜通 · Hack for Humanity 2026</p>
+            <p className="mt-1 text-sm text-muted-foreground">Free · No download · No sign-in</p>
+          </div>
+            <img src={otterLogo} alt="" width={176} height={176} className="size-20 shrink-0 rounded-2xl bg-card object-contain p-2 shadow-xl lg:size-24 xl:size-28 [@media(max-height:650px)]:size-16" />
+        </div>
+         <div className="mt-3 flex flex-wrap gap-2 [@media(max-height:650px)]:mt-1">{["MIT License", "$0 Stack", "SAIA AI Festival 2026 · Hack for Humanity"].map(b => <span key={b} className="rounded-full border border-primary/30 bg-card px-3 py-1 text-[11px] font-extrabold text-primary">{b}</span>)}</div>
+         <ul className="mt-2 grid grid-cols-1 gap-0.5 text-[11px] lg:grid-cols-2" aria-label="Hack for Humanity pillars">{[["👵", "Silver Connections", "Voice + local groups"], ["🤝", "Neighbourhoods That Care", "Chop, claim, escort"], ["💙", "Kinder Digital World", "Calm, plain-language help"], ["🙏", "Dignity by Design", "No login or identifiers"], ["🌏", "No One Left Behind", "Four resident languages"]].map(([i, p, d]) => <li key={p}><strong>{i} {p}</strong> <span className="text-muted-foreground">— {d}</span></li>)}</ul>
+         <div className="mt-3 flex divide-x divide-border text-center [@media(max-height:650px)]:mt-1">{[["4", "languages"], ["123", "real hawker centres"], ["100 m", "photo geofence"], ["0", "sign-ins"]].map(([n, l]) => <div key={l} className="px-3 first:pl-0 lg:px-5"><strong className="block text-base lg:text-lg [@media(max-height:650px)]:text-base">{n}</strong><span className="text-[10px] text-muted-foreground lg:text-xs [@media(max-height:650px)]:text-[10px]">{l}</span></div>)}</div>
+         <p className="judge-summary mt-2 max-w-2xl [@media(max-height:860px)]:hidden text-xs leading-relaxed lg:text-sm">A voice-first community helper for meal lobang, CC events and activity kakis. A meal tip needs a live photo, a 100 m location check and a neighbour's chop before it can be heard as verified.</p>
+         <div className="short-screen-panels mt-2 grid grid-cols-2 gap-2 [@media(max-height:650px)]:[&>section]:p-2 [@media(max-height:650px)]:[&_section_img]:size-16">{privacyTerms}{creator}</div>
+         <div className="mt-2 rounded-md border-2 border-primary bg-food/45 px-3 py-2 text-xs leading-snug"><p><strong className="text-primary">🏆 Best User Experience mention · Hack for Humanity 2026</strong></p><p className="mt-1">Building for seniors? <strong className="text-primary">Come talk UX with us</strong> — we'd love to share what we learned.</p><p className="mt-1 text-muted-foreground [@media(max-height:860px)]:hidden">Every choice was made so an elder never feels alienated: speak in your own language, no sign-up, no jargon — a friendly chat that feels like WhatsApp, not a bank app.</p></div>
+         <div className="mt-2 border-t border-border pt-2">{judges}</div>
+         <div className="judge-links mt-2 flex items-center justify-between gap-4"><div className="shrink-0 scale-90 origin-left">{links}</div><p className="hidden items-center gap-2 text-right text-xs font-extrabold text-primary xl:flex"><span>Try the mobile experience</span><ArrowRight className="size-5" /></p></div>
+         <div className="judge-credit text-[11px] text-muted-foreground"><p className="font-medium text-foreground">Made with <a href="https://lovable.dev" target="_blank" rel="noopener noreferrer" className="underline">Lovable</a> for <a href="https://www.aicollective.com/h4h" target="_blank" rel="noopener noreferrer" className="underline">Hack for Humanity</a></p></div>
+      </div>
+    </aside>
+
     <div className="relative flex h-dvh w-full flex-col bg-background md:h-full md:max-h-[900px] md:w-auto md:aspect-[9/19.5] md:min-w-[250px] md:shrink-0 md:overflow-hidden md:rounded-[2.75rem] md:border-8 md:border-foreground md:shadow-2xl lg:min-w-[280px] xl:min-w-[300px]" aria-label="Interactive LobangKaki mobile experience inside a phone frame">
       <div className="pointer-events-none absolute left-1/2 top-2 z-10 hidden h-5 w-28 -translate-x-1/2 rounded-full bg-foreground md:block" aria-hidden="true" />
+      <div className="honour-ribbon pointer-events-none absolute -left-1 bottom-16 z-20 hidden select-none flex-col items-center md:flex" aria-hidden="true">
+        <div className="honour-ribbon__tails"><div className="honour-ribbon__tail honour-ribbon__tail--left" /><div className="honour-ribbon__tail honour-ribbon__tail--right" /></div>
+        <div className="honour-ribbon__rosette"><div className="honour-ribbon__pleats" /><div className="honour-ribbon__face"><span className="honour-ribbon__star" /><span className="honour-ribbon__kicker">Honourable</span><span className="honour-ribbon__word">Mention</span></div><div className="honour-ribbon__pin" /></div>
+      </div>
       <div className="shrink-0 md:pt-7">{header}</div>
       <div className={tab === "chat" ? "flex min-h-0 flex-1 flex-col px-3" : "hidden"}>
          <div className="mb-3" aria-label="Food, CC events and group activity picture shortcuts"><div className="grid grid-cols-3 gap-2">{demos.map((demo, index) => <Button key={demo.label} variant="ghost" onClick={() => pickSticker(demo.kind)} data-kind={demo.kind} className={`sticker-demo-button h-auto flex-col justify-center gap-0 whitespace-normal rounded-full border-0 bg-transparent px-1 py-1 text-center text-sm font-bold leading-tight shadow-none hover:bg-transparent focus-visible:bg-transparent sm:text-base min-h-24`}>{index === 2 ? <GroupSticker compact /> : <ActionSticker kind={demo.kind} compact callout={demo.kind === "food" ? "Stall check first!" : undefined} />}<span className="mt-1">{index === 0 ? t.food : index === 1 ? t.cc : t.walk}</span></Button>)}</div><Button type="button" variant="outline" onClick={() => { setIntent(null); setTab("deals"); }} className="mt-2 min-h-12 w-full rounded-full border-primary/40 text-base font-bold text-primary hover:bg-primary/10 hover:text-primary">🛍️ {t.deals}</Button></div>
@@ -322,8 +368,13 @@ function LobangKaki() {
          <div className="mt-4"><div className="mb-2 text-base font-bold text-foreground" id="language-label">Language / 语言 / Bahasa / மொழி</div><div className="grid grid-cols-2 gap-2 sm:grid-cols-4" role="group" aria-labelledby="language-label">{languages.map(option => <Button key={option.id} type="button" variant={language === option.id ? "default" : "outline"} aria-pressed={language === option.id} onClick={() => chooseLanguage(option.id)} className="h-auto min-h-12 whitespace-normal px-2 py-2 text-center text-base leading-tight">{option.label}</Button>)}</div></div>
          <div className="mt-4"><div className="mb-2 text-base font-bold text-foreground" id="diet-label">{t.diet}</div><div className="flex flex-wrap gap-2" role="group" aria-labelledby="diet-label">{(["all", "halal", "vegetarian"] as const).map(option => <Button key={option} type="button" variant={mealDiet === option ? "default" : "outline"} aria-pressed={mealDiet === option} onClick={() => { setMealDiet(option); window.speechSynthesis?.cancel(); }} className="min-h-12 whitespace-normal px-3 text-base">{option === "all" ? t.all : option === "halal" ? t.halal : t.vegetarian}</Button>)}</div><p className="mt-2 text-sm text-muted-foreground" role="status">{suitableMeals.length ? `${suitableMeals.length} ${language === "zh" ? "份已检查的餐食" : language === "ms" ? "hidangan telah disemak" : language === "ta" ? "சரிபார்த்த உணவு" : "checked meal(s) in this demo"}. ${language === "en" ? "Confirm ingredients with the stall." : ""}` : t.empty}</p></div>
          <Button type="button" variant="outline" onClick={() => { setVoiceOn(!voiceOn); if (voiceOn) window.speechSynthesis?.cancel(); }} className="min-h-12 w-full text-base">{voiceOn ? <><Volume2 />Spoken replies on</> : <><VolumeX />Spoken replies off</>}</Button>
-         {walkStats}
-         {privacyTerms}
+        <div className="md:hidden">{links}</div>
+        <div className="md:hidden">{walkStats}</div>
+         <div className="md:hidden">{privacyTerms}</div>
+         <div className="md:hidden">{creator}</div>
+         <div className="md:hidden">{judges}</div>
+         <div className="md:hidden"><div className="rounded-md border-2 border-primary bg-food/45 p-3"><p className="font-display text-sm font-extrabold text-primary">🏆 Mentioned for Best User Experience · Hack for Humanity 2026</p><p className="mt-1 text-xs leading-relaxed text-foreground">Building for seniors or neighbours? Come talk UX with us — voice-first, no sign-in, in their own language.</p><p className="mt-1 text-xs leading-relaxed text-muted-foreground">Designed so elders never feel alienated: no accounts, no jargon, just a chat that feels like WhatsApp.</p></div></div>
+         <div className="rounded-md border border-border bg-card p-4 text-center shadow-sm"><div className="font-display text-sm font-extrabold">🎨 Sticker pack</div><p className="mt-1 text-xs leading-relaxed text-muted-foreground">All 21 LobangKaki stickers — free to download and share.</p><a href={stickerPack.url} download="lobangkaki-stickers.zip" className="mt-3 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-4 text-base font-bold text-primary-foreground hover:bg-primary/90"><Download className="size-5" />Download all stickers (ZIP)</a></div>
         {about}
       </div>
       <nav className="relative grid shrink-0 grid-cols-5 items-end border-t border-border bg-background pb-[env(safe-area-inset-bottom)]" aria-label="App sections">

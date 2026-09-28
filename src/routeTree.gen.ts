@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PitchRouteImport } from './routes/pitch'
 import { Route as ReadmeRouteImport } from './routes/readme'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PitchRoute = PitchRouteImport.update({
+  id: '/pitch',
+  path: '/pitch',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReadmeRoute = ReadmeRouteImport.update({
@@ -25,27 +31,31 @@ const ReadmeRoute = ReadmeRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/pitch': typeof PitchRoute
   '/readme': typeof ReadmeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pitch': typeof PitchRoute
   '/readme': typeof ReadmeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/pitch': typeof PitchRoute
   '/readme': typeof ReadmeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/readme'
+  fullPaths: '/' | '/pitch' | '/readme'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/readme'
-  id: '__root__' | '/' | '/readme'
+  to: '/' | '/pitch' | '/readme'
+  id: '__root__' | '/' | '/pitch' | '/readme'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PitchRoute: typeof PitchRoute
   ReadmeRoute: typeof ReadmeRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pitch': {
+      id: '/pitch'
+      path: '/pitch'
+      fullPath: '/pitch'
+      preLoaderRoute: typeof PitchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/readme': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PitchRoute: PitchRoute,
   ReadmeRoute: ReadmeRoute,
 }
 export const routeTree = rootRouteImport
