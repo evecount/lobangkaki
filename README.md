@@ -33,7 +33,7 @@ Dietary filters (halal, vegetarian) use only explicit poster declarations — ne
 
 All 21 hand-illustrated stickers used in the app — the mascot, food categories, activity groups, and the maker sticker — are free to download and reuse (MIT, same as the code):
 
-**[⬇️ Download the LobangKaki sticker pack (ZIP, ~23 MB)](https://lobangkaki.lovable.app/__l5e/assets-v1/9ef2c0cd-c6d2-4920-8b57-d84da011d62e/lobangkaki-stickers.zip)**
+**[⬇️ Download the LobangKaki sticker pack (ZIP, ~23 MB)](https://lobangkaki.lovable.app/__l5e/assets-v1/665d5757-5b42-40bf-ad7b-5c9c6f3242c7/lobangkaki-stickers.zip)**
 
 Individual PNGs also live in [`src/assets/`](src/assets/) if you just want one or two.
 
