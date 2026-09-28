@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LobangKaki (甘榜通) — voice-first community assistant</title>
+<meta name="description" content="A free, open-source, no-sign-in community assistant for Singapore neighbourhoods: meal lobang, CC events, and activity groups in four languages.">
+<style>
+  :root { --green:#1d5c45; --cream:#f4f7ec; --card:#ffffff; --ink:#1c2b24; }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: "Nunito Sans", system-ui, sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; }
+  main { max-width: 760px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+  .badge { display:inline-block; background:#e2efe4; color:var(--green); font-weight:800; font-size:.8rem; padding:.3rem .8rem; border-radius:99px; letter-spacing:.04em; }
+  h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: 1.1; margin: 1rem 0 .5rem; }
+  h1 span { font-weight: 500; }
+  .tag { font-size: 1.15rem; color: #47604f; max-width: 34rem; }
+  .cta { display:flex; flex-wrap:wrap; gap:.8rem; margin: 2rem 0; }
+  .cta a { display:inline-block; padding:.9rem 1.6rem; border-radius:99px; font-weight:800; text-decoration:none; font-size:1.05rem; }
+  .cta .primary { background: var(--green); color: #fff; }
+  .cta .secondary { border: 2px solid var(--green); color: var(--green); }
+  section { margin-top: 2.5rem; }
+  h2 { font-size: 1.4rem; margin-bottom: .6rem; }
+  ul { padding-left: 1.2rem; }
+  li { margin: .35rem 0; }
+  .cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:.8rem; margin-top:1rem; }
+  .card { background: var(--card); border-radius: 1rem; padding: 1rem 1.1rem; box-shadow: 0 6px 18px -12px rgba(28,43,36,.35); }
+  .card strong { display:block; margin-bottom:.2rem; }
+  footer { margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid #d8e2d2; font-size: .9rem; color: #5a6f60; }
+  a { color: var(--green); }
+</style>
+</head>
+<body>
+<main>
+  <span class="badge">MIT · OPEN SOURCE · $0 STACK</span>
+  <h1>LobangKaki <span>甘榜通</span></h1>
+  <p class="tag">A voice-first, no-sign-in community assistant for Singapore neighbourhoods — meal lobang, community club events, and activity groups, in English, Mandarin, Malay, and Tamil.</p>
+  <div class="cta">
+    <a class="primary" href="https://lobangkaki.lovable.app">Try the live demo</a>
+    <a class="secondary" href="https://github.com/evecount/lobangkaki">View the code on GitHub</a>
+  </div>
+
+  <section>
+    <h2>Why it exists</h2>
+    <p>Seniors and low-literacy residents are locked out by app stores, logins, and English-only portals. LobangKaki works like a familiar chat: open the page, speak, and get help — no account, no download, no personal details asked.</p>
+  </section>
+
+  <section>
+    <h2>No phantom deals</h2>
+    <div class="cards">
+      <div class="card"><strong>📸 Physical proof</strong>A deal needs a live stall photo plus a ~100 m location check.</div>
+      <div class="card"><strong>🟢 Community chop</strong>Only volunteer-checked listings are ever spoken as verified.</div>
+      <div class="card"><strong>🚫 Anti-prank</strong>Listings flagged twice are withdrawn automatically.</div>
+      <div class="card"><strong>🙏 Zero PII</strong>No name, phone number, or NRIC is ever requested.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Features</h2>
+    <ul>
+      <li>Voice input and spoken replies in four languages (Hokkien falls back to Mandarin)</li>
+      <li>123 real NEA hawker centres from Data.gov.sg, with postal-code and estate lookup</li>
+      <li>"Find food near me" geolocation to the closest official hawker centres</li>
+      <li>Live Deals board with volunteer verification, expiry, and withdrawal</li>
+      <li>CC events and activity groups — walking, dancerobics, wushu, karaoke</li>
+      <li>Share a lobang straight to WhatsApp</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Run it yourself</h2>
+    <p>Clone the repo, then <code>npm install &amp;&amp; npm run dev</code>. Full instructions and contribution guidelines are in the <a href="https://github.com/evecount/lobangkaki">GitHub repository</a>.</p>
+  </section>
+
+  <footer>
+    LobangKaki is open source under the MIT license. The current build is a client-side simulation — demo listings are examples, not real offers.
+  </footer>
+</main>
+</body>
+</html>
